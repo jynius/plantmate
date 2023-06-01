@@ -1,0 +1,6 @@
+.content-container {
+    padding-top: 20px;
+    padding-bottom: 80px;
+    min-height: calc(100vh - 140px);
+    z-index: 1;
+  }

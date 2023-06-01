@@ -1,0 +1,40 @@
+.header {
+    background-color: green;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+  }
+  
+  .header-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .nav-link {
+    color: white;
+    display: initial;
+    
+  }
+
+  .transparent-button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .transparent-button:hover {
+    opacity: 1;
+  }
+  
+  @media (max-width: 991px) {
+    .header-container {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
