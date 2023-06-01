@@ -18,9 +18,6 @@ const Header = () => {
               <Nav.Link href='search' className='nav-link'>
                 식물 검색
               </Nav.Link>
-              <Nav.Link href='my-plants' className='nav-link'>
-                내식물 관리
-              </Nav.Link>
               <Nav.Link href='community' className='nav-link'>
                 커뮤니티
               </Nav.Link>
