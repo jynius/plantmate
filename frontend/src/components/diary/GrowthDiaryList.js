@@ -56,8 +56,8 @@ const GrowthDiaryList = () => {
             >
               <Form.Select>
                 <option>날짜정렬</option>
-                <option>오름차순</option>
-                <option>내림차순</option>
+                <option>최신순</option>
+                <option>오래된순</option>
               </Form.Select>
             </Col>
             <Col
@@ -66,9 +66,11 @@ const GrowthDiaryList = () => {
               style={{ marginTop: "5px" }}
             >
               <Form.Select>
-                <option>제목+이름</option>
+                <option>전체</option>
                 <option>제목</option>
-                <option>이름</option>
+                <option>식물 한글명</option>
+                <option>식물 영문명</option>
+                <option>식물 닉네임</option>
               </Form.Select>
             </Col>
             <Col
