@@ -8,12 +8,13 @@
 .App {
   text-align: center;
   font-size: 10px;  
-  font-family: this_is_font_name;
+  
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+  font-family: this_is_font_name;
 }
 
 @media (prefers-reduced-motion: no-preference) {

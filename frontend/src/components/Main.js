@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router";
 import SampleHome from "./SampleHome";
-import Community from "../community/Community";
+import Community from "./community/Community";
 import GrowthDiaryList from "./diary/GrowthDiaryList";
 
 const Main = () => {
