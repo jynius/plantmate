@@ -27,8 +27,10 @@ function App() {
       {loginCheck ? (
         <>
           <Header />
-          <nav>{component}</nav>
-          <Footer />
+          <nav>
+            {component}
+            <Footer />
+          </nav>
         </>
       ) : (
         { component }

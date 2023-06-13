@@ -1,22 +1,17 @@
-.header {
-    background-color: green;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
-  }
-  
-  .header-container {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  
-  .nav-link {
+ .nav-link {
     color: white;
     display: initial;
     
+  }
+
+  .nav-link .select {
+    color: grey;
+    display: initial;  
+  }
+
+  .ml-auto {
+    display: block;
+    flex:auto;
   }
 
   .transparent-button {
@@ -32,9 +27,3 @@
     opacity: 1;
   }
   
-  @media (max-width: 991px) {
-    .header-container {
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-  }
