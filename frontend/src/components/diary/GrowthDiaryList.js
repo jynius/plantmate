@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Card, Modal } from "react-bootstrap";
 import Page from "../layout/Page";
 import apiService from "../../services/ApiService";
+import DiaryFormModal from "../modal/diary/DiaryFormModal";
+import DiaryDetailModal from "../modal/diary/DiaryDetailModal";
 
 const GrowthDiaryList = () => {
-
+    const [showModal, setShowModal] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [diaryList, setDiaryList] = useState([1, 2]);
     const [ search, setSearch] = useState({ //검색정보
@@ -67,6 +69,10 @@ const GrowthDiaryList = () => {
         }
         setSearch(newSearch);
         searchFuc();
+    }
+
+    const openModalDiaryDetail = () => {
+        setShowModal(true);
     }
 
     const clear = () => {
@@ -210,11 +216,11 @@ return (
                         <Card.Text>
                             {"일지내용"}
                         </Card.Text>
-                        <Button variant='secondary' onClick={() => alert("상세정보가 보이니 ?")}>상세정보</Button>
+                        <Button variant='secondary' onClick={() => openModalDiaryDetail()}>상세정보</Button>
                         <Button variant='secondary' style={{
                             margin: "5px",
                         }}
-                        onClick={() => alert("상세정보가 보이니 ?")}
+                        onClick={() => openModalDiaryDetail()}
                         >삭제</Button>
                     </Card.Body>
                   </Card>
@@ -225,6 +231,8 @@ return (
         </Row>
         <Page isExpanded={isExpanded} page={page} setPage={setPage} searchFuc={searchFuc} />
       </Container>
+        <DiaryDetailModal showModal={showModal} setShowModal={setShowModal}/>
+        <DiaryFormModal showModal={showModal} setShowModal={setShowModal}/>
     </Container>
   );
 };
