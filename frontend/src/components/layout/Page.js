@@ -1,36 +1,82 @@
 import Pagination from "react-bootstrap/Pagination";
 
-function Page({ isExpanded }) {
+function Page({ isExpanded, page, setPage, searchFuc }) {
+  // const testClick = () => {
+  //   setPage({
+  //     page: 7,
+  //     totalPage: 7
+  //   })
+  //   searchFuc();
+  // }
+
   return (
+      <>
     <Pagination className='justify-content-center'>
       {isExpanded && (
         <>
-          <Pagination.First />
-          <Pagination.Prev />
-          <Pagination.Item>{1}</Pagination.Item>
-          <Pagination.Ellipsis />
+          {
+            page.page > 2 ? (
+                  <>
+                    <Pagination.First />
+                    <Pagination.Prev />
+                    <Pagination.Item>{page.page - 2}</Pagination.Item>
+                    <Pagination.Item>{page.page - 1}</Pagination.Item>
+                  </>
+                ) : ""
+          }
+          {
+            page.page == 2 ? (
+                <>
+                  <Pagination.Prev />
+                  <Pagination.Item>{page.page -1}</Pagination.Item>
+                </>
+            ): ""
+          }
+          <Pagination.Item active>{"1"}</Pagination.Item>
+          {
+            page.totalPage > page.page + 1 ? (
+                    <>
+                      <Pagination.Item>{page.page + 1}</Pagination.Item>
+                      <Pagination.Item>{page.page + 2}</Pagination.Item>
+                      <Pagination.Next />
+                      <Pagination.Last />
+                    </>
+                ) : ""
+          }
+          {
+            page.totalPage <= page.page + 1 && page.totalPage > page.page ? (
+                <>
+                  <Pagination.Item>{page.page  + 1}</Pagination.Item>
+                  <Pagination.Next />
+                </>
+            ): ""
+          }
 
-          <Pagination.Item>{10}</Pagination.Item>
-          <Pagination.Item>{11}</Pagination.Item>
-          <Pagination.Item active>{12}</Pagination.Item>
-          <Pagination.Item>{13}</Pagination.Item>
-          <Pagination.Item disabled>{14}</Pagination.Item>
-          <Pagination.Ellipsis />
-          <Pagination.Item>{20}</Pagination.Item>
-          <Pagination.Next />
-          <Pagination.Last />
         </>
       )}
       {!isExpanded && (
         <>
-          <Pagination.Prev />
-          <Pagination.Item>{11}</Pagination.Item>
-          <Pagination.Item active>{12}</Pagination.Item>
-          <Pagination.Item>{13}</Pagination.Item>
-          <Pagination.Next />
+          {page.page > 1 ?
+              <>
+                <Pagination.Prev />
+                <Pagination.Item>{page.page -1}</Pagination.Item>
+              </> : ""}
+
+          <Pagination.Item active>{"page.page"}</Pagination.Item>
+
+          {page.totalPage > page.Page ?
+              <>
+                <Pagination.Item>{page.page  + 1}</Pagination.Item>
+                <Pagination.Next />
+              </> : ""}
         </>
       )}
+
     </Pagination>
+  {/*<button onClick={testClick}/>*/}
+  {/*      test*/}
+  </>
+
   );
 }
 

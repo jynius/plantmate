@@ -2,25 +2,80 @@ import React, { useEffect, useState } from "react";
 
 import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
 import Page from "../layout/Page";
+import apiService from "../../services/ApiService";
 
 const GrowthDiaryList = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  //초기 사이즈 확인 및 resize event mount시 추가 및 unmount시 삭제
-  useEffect(() => {
-    const handleResize = () => {
-      setIsExpanded(window.innerWidth >= 768);
-    };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
+    const [isExpanded, setIsExpanded] = useState(false);
+    const [diaryList, setDiaryList] = useState([1, 2]);
+    const [ search, setSearch] = useState({ //검색정보
+        sort : "",
+        searchType: "",
+        searchKeyword: "",
+    })
+    const [ page, setPage] = useState({ //페이지 정보
+        page: 1,
+        size: "9",
+        totalPage: 1
+    })
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+    //초기 사이즈 확인 및 resize event mount시 추가 및 unmount시 삭제
+    useEffect(() => {
+        const handleResize = () => {
+          setIsExpanded(window.innerWidth >= 768);
+        };
 
-  const cardList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-  return (
+        handleResize();
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+          window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+    //초기조회
+    useEffect(() => {
+        searchFuc();
+
+        return clear;
+    },[]);
+
+    const handleSearch = () => {
+      searchFuc();
+    }
+
+    const searchFuc = () => {
+        const param = {
+            ...search,
+            ...page,
+            diaryList
+        }
+
+        apiService.get("growth", param)
+            .then((response) => {
+                const list = response.list;
+                setDiaryList(list);
+            })
+            .catch((response) => {
+                setDiaryList(diaryList)
+            })
+    }
+
+    const handleChangeSearch = (target) => {
+        const newSearch = {
+            ...search,
+            [target.name]: target.value
+        }
+        setSearch(newSearch);
+        searchFuc();
+    }
+
+    const clear = () => {
+        setSearch({});
+        setPage({});
+        setDiaryList([]);
+    }
+
+return (
     <Container>
       <Container>
         <Row
@@ -54,7 +109,7 @@ const GrowthDiaryList = () => {
                 marginTop: "5px",
               }}
             >
-              <Form.Select>
+              <Form.Select name="sort" onChange={(e) => {handleChangeSearch(e.target)}}>
                 <option>날짜정렬</option>
                 <option>최신순</option>
                 <option>오래된순</option>
@@ -65,12 +120,12 @@ const GrowthDiaryList = () => {
               md={{ order: "2", span: "2" }}
               style={{ marginTop: "5px" }}
             >
-              <Form.Select>
-                <option>전체</option>
-                <option>제목</option>
-                <option>식물 한글명</option>
-                <option>식물 영문명</option>
-                <option>식물 닉네임</option>
+              <Form.Select name="searchType" onChange={(e) => {handleChangeSearch(e.target)}}>
+                <option value="">전체</option>
+                <option value="title">제목</option>
+                <option value="kor">식물 한글명</option>
+                <option value="eng">식물 영문명</option>
+                <option value="nick">식물 닉네임</option>
               </Form.Select>
             </Col>
             <Col
@@ -81,7 +136,7 @@ const GrowthDiaryList = () => {
               }}
             >
               <form>
-                <Form.Control type='text' placeholder='성장일지 조회' />
+                <Form.Control type='text' placeholder='성장일지 조회' name="searchKeyword" onChange={(e) => {handleChangeSearch(e.target)}}/>
               </form>
             </Col>
             <Col
@@ -97,6 +152,9 @@ const GrowthDiaryList = () => {
                 variant='secondary'
                 style={{
                   width: "100%",
+                }}
+                onClick={() => {
+                    handleSearch();
                 }}
               >
                 조회
@@ -128,7 +186,7 @@ const GrowthDiaryList = () => {
             xl={3}
             style={{ margin: " 0 auto" }}
           >
-            {cardList.map((index) => {
+            {diaryList?.map((index) => {
               return (
                 <Col key={index} className='card-column'>
                   <Card
@@ -139,17 +197,25 @@ const GrowthDiaryList = () => {
                       minWidth: "250px",
                     }}
                   >
-                    <Card.Img
-                      variant='top'
-                      src='https://picsum.photos/100/120'
-                    />
+
                     <Card.Body>
-                      <Card.Title>Card Title</Card.Title>
-                      <Card.Text>
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                      </Card.Text>
-                      <Button variant='secondary'>Go somewhere</Button>
+                        <div style={{display:'flex',justifyContent:'space-between'}}>
+                            <p>{"2022-05-05"}</p>
+                        </div>
+                        <Card.Img
+                            variant='top'
+                            src='https://picsum.photos/100/120'
+                        />
+                        <Card.Title style={{}}>{"식물 닉네임"}</Card.Title>
+                        <Card.Text>
+                            {"일지내용"}
+                        </Card.Text>
+                        <Button variant='secondary' onClick={() => alert("상세정보가 보이니 ?")}>상세정보</Button>
+                        <Button variant='secondary' style={{
+                            margin: "5px",
+                        }}
+                        onClick={() => alert("상세정보가 보이니 ?")}
+                        >삭제</Button>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -157,7 +223,7 @@ const GrowthDiaryList = () => {
             })}
           </Row>
         </Row>
-        <Page isExpanded={isExpanded} />
+        <Page isExpanded={isExpanded} page={page} setPage={setPage} searchFuc={searchFuc} />
       </Container>
     </Container>
   );
