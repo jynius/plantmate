@@ -1,47 +1,83 @@
 import React from "react";
 import {Button, ListGroup, Badge, Card, CardGroup,Container,Row,Col,Image,ToggleButton} from 'react-bootstrap';
 import { useState } from "react";
+import { NavLink, Link, useNavigate} from "react-router-dom"
 import apiService from "../../services/ApiService";
 import Api from "../../utils/Api";
 import plant from "./plant.jpg"
+import { FaPlus ,FaAngleUp} from "react-icons/fa";
 const Community = () =>{
+  
+  const navigate = useNavigate();
+  // 커뮤니티 게시글 등록 화면 이동 이벤트
+  const onMoveCommunityResiger = () =>{
+    console.log("register");
+    navigate("/community/post-register");
+  }
+
+  const LIST_DUMMY = [
+    {title:'식물 정보 공유합니다.',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'정보공유'},
+    {title:'제 몬스테라 예쁘죠?',content:'몬스테라인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:55:33',category:'자랑해요'},      
+    {title:'제 식물 왜이러죠..?',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'봐주세요'},
+    {title:'식물 영양제 추천',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'정보공유'},
+    {title:'식물 정보 공유합니다.',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'정보공유'},
+    {title:'제 몬스테라 예쁘죠?',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:55:33',category:'자랑해요'},  
+  ];
 
     const [activeButton, setActiveButton] = useState('button1');
 
     const handleButtonClick = (buttonName) => {
       setActiveButton(buttonName);
-    };
-
-    const LIST_DUMMY = [
-      {title:'식물 정보 공유합니다.',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'정보공유'},
-      {title:'제 몬스테라 예쁘죠?',content:'몬스테라인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:55:33',category:'자랑해요'},      
-      {title:'제 식물 왜이러죠..?',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'봐주세요'},
-      {title:'식물 영양제 추천',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'정보공유'},
-      {title:'식물 정보 공유합니다.',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'정보공유'},
-      {title:'제 몬스테라 예쁘죠?',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:55:33',category:'자랑해요'},  
-    ];
-  
+    };    
   
     return (
       <div>
-        <Button onClick={() => handleButtonClick('button1')}>이미지형</Button>
-        <Button onClick={() => handleButtonClick('button2')}>리스트형</Button>
-        <Button onClick={() => handleButtonClick('button3')}>상세형</Button>
+        <Button variant="success" onClick={() => handleButtonClick('button1')}>이미지형</Button>
+        <Button variant="success" onClick={() => handleButtonClick('button2')}>리스트형</Button>
+        <Button variant="success" onClick={() => handleButtonClick('button3')}>상세형</Button>
         
-        {activeButton === 'button1' && <View1 />}
+        {activeButton === 'button1' && <CommunityImageView />}
         {activeButton === 'button2' && <CommunityListView communityPostList={LIST_DUMMY} />}
         {activeButton === 'button3' && <CommunityCardView communityPostList={LIST_DUMMY}/>}
+        
+        <div
+          style={{
+            position: "fixed",
+            right: "20px",
+            bottom: "115px",
+            zIndex: 9999,
+          }}
+        >
+          <Button variant="success" className="rounded-circle" onClick={onMoveCommunityResiger}>
+            <FaPlus />
+          </Button>          
+        </div>
+        
+        <div
+          style={{
+            position: "fixed",
+            right: "20px",
+            bottom: "70px",
+            zIndex: 9999,
+          }}
+        >
+        
+        <Button variant="secondary" className="rounded-circle">
+            <FaAngleUp/>
+        </Button>
+        </div>
       </div>
+      
     );     
     
 }
-const View1 = () => {
+const CommunityImageView = () => {
   
   return(
     <div>     
       <h2></h2> 
     <Container>
-      <Row noGutters>
+      <Row>
           <Col sm={12} md={4} className="p-0">
             <Image src={plant} thumbnail />
           </Col>
@@ -119,12 +155,12 @@ const View1 = () => {
       <div>
         <h1></h1>
         <Container>
-        <Row xs={1} md={3} lg={3}>
+        <Row xs={1} md={1} lg={1} >
           {communityPostList.map((post, index) => (
             <Col key={index}>
-              <Card>
-                
+              <Card>               
                 <Card.Body>
+                <Card.Title style={{textAlign:'left', marginTop:'5px'}}>{post.title}</Card.Title> 
                   <div style={{display:'flex',justifyContent:'space-between'}}>
                     <p>{post.create_dt}</p>
                     <p>조회수: 8</p>
@@ -132,15 +168,14 @@ const View1 = () => {
                   <Card.Img
                   variant="middle"
                   src={plant}
-                  style={{ width: "100%", height: "260px", objectFit: "cover" }}
-                />
-                <Card.Title style={{textAlign:'left', marginTop:'5px'}}>{post.title}</Card.Title>             
+                  style={{ width: "30%", height: "30%", objectFit: "cover" }}
+                />                           
                   <Card.Text style={{textAlign:'left'}}>
                     {post.content}
                   </Card.Text>
-                  <div style={{display:"flex",justifyContent:"right"}}>
+                  <div style={{display:"flex", justifyContent:'space-between'}}>
                     <div>
-                    <Badge bg="success" pill>13</Badge>
+                      <span>댓글 :13</span>
                     </div>
                     <ToggleButton id="tbg-btn-1" value={1}>
                       북마크
