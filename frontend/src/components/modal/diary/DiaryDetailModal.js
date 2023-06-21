@@ -84,7 +84,7 @@ const DiaryDetailModal = ({ showModal, setShowModal }) => {
                 </Row>
                 <Row className="justify-content-center">
                     <Col xs={6} md={4} className="d-flex justify-content-center">
-                        <Button variant="secondary" onClick={() => setShowModal(false)} block>
+                        <Button variant="secondary" onClick={() => setShowModal(false)} block={"true"}>
                             닫기
                         </Button>
                     </Col>

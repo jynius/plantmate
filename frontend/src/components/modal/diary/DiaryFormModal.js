@@ -1,12 +1,13 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { RootContext } from "../../../context/RootStore";
+import ApiService from "../../../services/ApiService";
 
 
 const DiaryFormModal = ({ showModal, setShowModal }) => {
 
-    const { diaryForm } = useContext(RootContext);
-    const {diaryFormStore, diaryFormDispatch, diaryFormState} = diaryForm;
+    const { diaryFormInfo } = useContext(RootContext);
+    const {diaryFormStore, diaryFormDispatch, diaryFormState} = diaryFormInfo;
 
     const handlePhotoChange = (event) => {
         const files = Array.from(event.target.files);
@@ -17,16 +18,25 @@ const DiaryFormModal = ({ showModal, setShowModal }) => {
     }
 
     const handleDeletePhoto = (index) => {
-        //const updatedPhotos = [...diaryFormState.photos];
-        //updatedPhotos.splice(index, 1);
-        //setDiaryFormValue({ ...diaryFormState, photos: updatedPhotos });
+        const updatedFiles = [...diaryFormState.photos];
+        updatedFiles.splice(index, 1);
+        diaryFormDispatch({ type: "UPDATE_DIARY_PHOTO_FORM", payload: {photos: updatedFiles}});
     };
 
+    const handleClear = () => {
+        diaryFormDispatch({ type: "CLEAR_DIARY_FORM", payload: diaryFormStore.initialDiaryForm });
+        setShowModal(false)
+    };
+
+    useEffect(() => {
+        diaryFormStore.getContent(diaryFormDispatch);
+        return () => diaryFormDispatch({ type: "CLEAR_DIARY_FORM", payload: diaryFormStore.initialDiaryForm });
+    }, [])
 
     return (
         <Modal
             show={showModal}
-            onHide={() => setShowModal(false)}
+            onHide={() => handleClear()}
             centered
             size="lg"
         >
@@ -134,7 +144,7 @@ const DiaryFormModal = ({ showModal, setShowModal }) => {
                     )}
                     <Row className="justify-content-center">
                         <Col xs={6} md={4} className="d-flex justify-content-center">
-                            <Button variant="secondary" onClick={() => setShowModal(false)} block>
+                            <Button variant="secondary" onClick={() => handleClear()} block={"true"}>
                                 닫기
                             </Button>
                         </Col>

@@ -1,25 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 
 import { Container, Row, Col, Button, Form, Card, Modal } from "react-bootstrap";
-import Page from "../layout/Page";
+import PageSample from "../layout/Page";
 import apiService from "../../services/ApiService";
 import DiaryFormModal from "../modal/diary/DiaryFormModal";
 import DiaryDetailModal from "../modal/diary/DiaryDetailModal";
+import {RootContext} from "../../context/RootStore";
 
 const GrowthDiaryList = () => {
     const [showModal, setShowModal] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
-    const [diaryList, setDiaryList] = useState([1, 2]);
-    const [ search, setSearch] = useState({ //검색정보
-        sort : "",
-        searchType: "",
-        searchKeyword: "",
-    })
-    const [ page, setPage] = useState({ //페이지 정보
-        page: 1,
-        size: "9",
-        totalPage: 1
-    })
+
+    const { diaryListInfo } = useContext(RootContext);
+    const {diaryListStore, diaryListDispatch, diaryListState} = diaryListInfo;
+
+    const {
+        diaryList,
+        search,
+        page
+    } = diaryListState;
+
+    // const [diaryList, setDiaryList] = useState([1, 2]);
+    // const [ search, setSearch] = useState({ //검색정보
+    //     sort : "",
+    //     searchType: "",
+    //     searchKeyword: "",
+    // })
+    // const [ page, setPage] = useState({ //페이지 정보
+    //     currentPage: 1,
+    //     size: "9",
+    //     totalPage: 1
+    // })
+
 
     //초기 사이즈 확인 및 resize event mount시 추가 및 unmount시 삭제
     useEffect(() => {
@@ -34,11 +46,12 @@ const GrowthDiaryList = () => {
           window.removeEventListener("resize", handleResize);
         };
     }, []);
+
     //초기조회
     useEffect(() => {
         searchFuc();
 
-        return clear;
+        return handleClear;
     },[]);
 
     const handleSearch = () => {
@@ -51,23 +64,15 @@ const GrowthDiaryList = () => {
             ...page,
             diaryList
         }
-
-        apiService.get("growth", param)
-            .then((response) => {
-                const list = response.list;
-                setDiaryList(list);
-            })
-            .catch((response) => {
-                setDiaryList(diaryList)
-            })
+        diaryListStore.searchDiaryList(diaryListDispatch, param);
     }
 
     const handleChangeSearch = (target) => {
-        const newSearch = {
-            ...search,
-            [target.name]: target.value
-        }
-        setSearch(newSearch);
+        diaryListDispatch({ type: "CHANGE_DIARY_SEARCH", payload: target });
+        searchFuc();
+    }
+    const handleChangePage = (target) => {
+        diaryListDispatch({ type: "CHANGE_DIARY_PAGE", payload: target });
         searchFuc();
     }
 
@@ -75,10 +80,8 @@ const GrowthDiaryList = () => {
         setShowModal(true);
     }
 
-    const clear = () => {
-        setSearch({});
-        setPage({});
-        setDiaryList([]);
+    const handleClear = () => {
+        diaryListDispatch({type: "CLEAR_DIARY_LIST", payload: diaryListStore.initialDiaryList})
     }
 
 return (
@@ -229,7 +232,7 @@ return (
             })}
           </Row>
         </Row>
-        <Page isExpanded={isExpanded} page={page} setPage={setPage} searchFuc={searchFuc} />
+        <PageSample isExpanded={isExpanded} page={page} handleChangePage={handleChangePage} searchFuc={searchFuc} />
       </Container>
         <DiaryDetailModal showModal={showModal} setShowModal={setShowModal}/>
         <DiaryFormModal showModal={showModal} setShowModal={setShowModal}/>
