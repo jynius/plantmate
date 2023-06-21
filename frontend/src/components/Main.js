@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router";
 import SampleHome from "./SampleHome";
 import Community from "./community/Community";
+import CommunityPostRegister from "./community/CommunityPostRegister";
 import GrowthDiaryList from "./diary/GrowthDiaryList";
 import MyPlantList from "./myplants/MyPlantList";
 import Login from "./auth/Login";
@@ -12,6 +13,7 @@ const Main = () => {
         <Route path="/" element={<SampleHome />} />
         <Route path="/search" element={<SampleHome />} />
         <Route path="/community" element={<Community />} />
+        <Route path="/community/post-register" element={<CommunityPostRegister />} />
         <Route path="/my-plants" element={<MyPlantList />} />
         <Route path="/growth-journal" element={<GrowthDiaryList />} />
         <Route path="/auth/login" element={<Login />} />
