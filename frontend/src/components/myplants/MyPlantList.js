@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer, useRef } from "react";
 
 import {
   Container,
@@ -11,23 +11,72 @@ import {
 } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
 import { GiWaterDrop } from "react-icons/gi";
-import Page from "../layout/Page";
+import MyPlantRegisterModal from "./MyPlantRegisterModal";
+//import Page from "../layout/Page";
+
+const reducer = (state, action) => {
+  let newState = [];
+  switch (action.type) {
+    case "INIT": {
+      return action.data;
+    }
+    case "CREATE": {
+      newState = [action.data, ...state];
+      break;
+    }
+    default:
+      return state;
+  }
+
+  localStorage.setItem("myplant", JSON.stringify(newState));
+  return newState;
+};
+
+export const MyPlantStateContext = React.createContext();
+export const MyPlantDispatchContext = React.createContext();
 
 const MyPlantList = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [data, dispatch] = useReducer(reducer, []);
+
   //초기 사이즈 확인 및 resize event mount시 추가 및 unmount시 삭제
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setIsExpanded(window.innerWidth >= 768);
+  //   };
+
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
+
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
+
   useEffect(() => {
-    const handleResize = () => {
-      setIsExpanded(window.innerWidth >= 768);
-    };
+    //localStorage.removeItem("myplant");
+    const localData = localStorage.getItem("myplant");
+    if (localData) {
+      const myPlantList = JSON.parse(localData).sort(
+        (a, b) => parseInt(b.id) - parseInt(a.id)
+      );
+      dataId.current = parseInt(myPlantList[0].id) + 1;
+      myPlantList.unshift(plants);
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+      dispatch({ type: "INIT", data: myPlantList });
+    }
   }, []);
+
+  const dataId = useRef(4);
+
+  const onCreate = (newData) => {
+    dispatch({
+      type: "CREATE",
+      data: newData,
+    });
+    dataId.current += 1;
+  };
 
   const plants = [
     {
@@ -73,8 +122,11 @@ const MyPlantList = () => {
   ];
 
   const handleRegisterPlant = () => {
-    // 등록 버튼 클릭 시 동작
-    console.log("Register plant");
+    setShowModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
   };
 
   return (
@@ -176,7 +228,7 @@ const MyPlantList = () => {
           }}
         >
           <Row>
-            {plants.map((plant) => (
+            {data.map((plant) => (
               <Col md={3} key={plant.id}>
                 <Card className="mb-4">
                   <Card.Img variant="top" src={plant.thumbnail} />
@@ -222,12 +274,24 @@ const MyPlantList = () => {
             zIndex: 9999,
           }}
         >
-          <Button variant="success" className="rounded-circle">
+          <Button
+            variant="success"
+            className="rounded-circle"
+            onClick={() => handleRegisterPlant()}
+          >
             <FaPlus />
           </Button>
         </div>
-        <Page isExpanded={isExpanded} />
+        {/* <Page isExpanded={isExpanded} /> */}
       </Container>
+      <MyPlantStateContext.Provider value={data}>
+        <MyPlantDispatchContext.Provider value={{ onCreate }}>
+          <MyPlantRegisterModal
+            showModal={showModal}
+            onClose={handleModalClose}
+          ></MyPlantRegisterModal>
+        </MyPlantDispatchContext.Provider>
+      </MyPlantStateContext.Provider>
     </Container>
   );
 };
