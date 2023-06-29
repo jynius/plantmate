@@ -1,11 +1,29 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Col, Form, Modal, Row} from "react-bootstrap";
+import {RootContext} from "../../../context/RootStore";
+import apiService from "../../../services/ApiService";
 
-const DiaryDetailModal = ({ showModal, setShowModal }) => {
+const DiaryDetailModal = ({ showDetailModal, setShowDetailModal, detailRecordId }) => {
+    const [detail, setDetail] = useState({});
+    useEffect(() => {
+        const param = {
+            detailRecordId: detailRecordId,
+        }
+        apiService.get("growth",param ).then((response) => {
+            setDetail(response?.detail);
+        }).catch();
+
+        return handleClear;
+    }, [])
+
+    const handleClear = () => {
+        setDetail({});
+    }
+
     return (
         <Modal
-            show={showModal}
-            onHide={() => setShowModal(false)}
+            show={showDetailModal}
+            onHide={() => setShowDetailModal(false)}
             centered
             size="lg"
         >
@@ -15,7 +33,7 @@ const DiaryDetailModal = ({ showModal, setShowModal }) => {
                         <Button
                             variant="secondary"
                             style={{ backgroundColor: "rgba(0, 0, 0, 0)", border: "none" }}
-                            onClick={() => setShowModal(false)}
+                            onClick={() => setShowDetailModal(false)}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +102,7 @@ const DiaryDetailModal = ({ showModal, setShowModal }) => {
                 </Row>
                 <Row className="justify-content-center">
                     <Col xs={6} md={4} className="d-flex justify-content-center">
-                        <Button variant="secondary" onClick={() => setShowModal(false)} block={"true"}>
+                        <Button variant="secondary" onClick={() => setShowDetailModal(false)} block={"true"}>
                             닫기
                         </Button>
                     </Col>
