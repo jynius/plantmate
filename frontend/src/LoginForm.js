@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col } from 'react-bootstrap';
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
@@ -13,8 +13,8 @@ const LoginForm = () => {
 
     return (
         <Form onSubmit={handleSubmit}>
-            <Form.Row className="mb-3">
-                <Form.Group as={Col} xs={12} controlId="formUsername">
+            <Row className="mb-3">
+                <Form.Group as={Col} controlId="formUsername">
                     <Form.Label>아이디</Form.Label>
                     <Form.Control
                         type="text"
@@ -23,10 +23,10 @@ const LoginForm = () => {
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </Form.Group>
-            </Form.Row>
+            </Row>
 
-            <Form.Row className="mb-3">
-                <Form.Group as={Col} xs={12} controlId="formPassword">
+            <Row className="mb-3">
+                <Form.Group as={Col} controlId="formPassword">
                     <Form.Label>비밀번호</Form.Label>
                     <Form.Control
                         type="password"
@@ -35,7 +35,7 @@ const LoginForm = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </Form.Group>
-            </Form.Row>
+            </Row>
 
             <Button variant="success" type="submit" className="mb-3">
                 로그인

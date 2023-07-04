@@ -6,7 +6,7 @@ import "./styles/common.css";
 
 // import Login from "./components/Login";
 import LoginForm from './LoginForm';
-import LogoutButton from './LogoutButton';
+//import LogoutButton from './LogoutButton';
 import Main from "./components/Main";
 import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
@@ -39,10 +39,10 @@ function App() {
       {loginCheck ? (
         <>
           <Header />
-          <div>
+          {/* <div>
             <h1>로그인</h1>
             <LoginForm />
-          </div>
+          </div> */}
           <nav>
             {component}
             <Footer />
