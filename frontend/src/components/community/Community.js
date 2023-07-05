@@ -1,11 +1,12 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {Button, ListGroup, Badge, Card, CardGroup,Container,Row,Col,Image,ToggleButton} from 'react-bootstrap';
-import { useState } from "react";
 import { NavLink, Link, useNavigate} from "react-router-dom"
-import apiService from "../../services/ApiService";
-import Api from "../../utils/Api";
-import plant from "./plant.jpg"
-import { FaPlus ,FaAngleUp} from "react-icons/fa";
+import axios from "axios";
+// import plant from "./plant.jpg"
+import {FaPlus ,FaAngleUp} from "react-icons/fa";
+
+const plant = "http://localhost:8080/api/file/6";
+
 const Community = () =>{
   
   const navigate = useNavigate();
@@ -13,64 +14,89 @@ const Community = () =>{
   const onMoveCommunityResiger = () =>{
     console.log("register");
     navigate("/community/post-register");
-  }
+  };
 
-  const LIST_DUMMY = [
-    {title:'식물 정보 공유합니다.',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'정보공유'},
-    {title:'제 몬스테라 예쁘죠?',content:'몬스테라인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:55:33',category:'자랑해요'},      
-    {title:'제 식물 왜이러죠..?',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'봐주세요'},
-    {title:'식물 영양제 추천',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'정보공유'},
-    {title:'식물 정보 공유합니다.',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'정보공유'},
-    {title:'제 몬스테라 예쁘죠?',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:55:33',category:'자랑해요'},  
-  ];
+  //const [listData, setListData] = useState(null);
+  // const LIST_DUMMY = [
+  //   {title:'식물 정보 공유합니다.',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'정보공유'},
+  //   {title:'제 몬스테라 예쁘죠?',content:'몬스테라인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:55:33',category:'자랑해요'},      
+  //   {title:'제 식물 왜이러죠..?',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'봐주세요'},
+  //   {title:'식물 영양제 추천',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'정보공유'},
+  //   {title:'식물 정보 공유합니다.',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:50:33',category:'정보공유'},
+  //   {title:'제 몬스테라 예쁘죠?',content:'홍콩야자수인데요..',nickname:'식물천사',create_dt:'2023-06-13 15:55:33',category:'자랑해요'},  
+  // ];
+  // let LIST_DUMMY = [];
+  // ListService.searchList({}, function({type, payload: list}) {
+  //   LIST_DUMMY = payload;
+  // });
 
-    const [activeButton, setActiveButton] = useState('button1');
+  const [activeButton, setActiveButton] = useState('button1');
 
-    const handleButtonClick = (buttonName) => {
-      setActiveButton(buttonName);
-    };    
-  
-    return (
-      <div>
-        <Button variant="success" onClick={() => handleButtonClick('button1')}>이미지형</Button>
-        <Button variant="success" onClick={() => handleButtonClick('button2')}>리스트형</Button>
-        <Button variant="success" onClick={() => handleButtonClick('button3')}>상세형</Button>
-        
-        {activeButton === 'button1' && <CommunityImageView />}
-        {activeButton === 'button2' && <CommunityListView communityPostList={LIST_DUMMY} />}
-        {activeButton === 'button3' && <CommunityCardView communityPostList={LIST_DUMMY}/>}
-        
-        <div
-          style={{
-            position: "fixed",
-            right: "20px",
-            bottom: "115px",
-            zIndex: 9999,
-          }}
-        >
-          <Button variant="success" className="rounded-circle" onClick={onMoveCommunityResiger}>
-            <FaPlus />
-          </Button>          
-        </div>
-        
-        <div
-          style={{
-            position: "fixed",
-            right: "20px",
-            bottom: "70px",
-            zIndex: 9999,
-          }}
-        >
-        
-        <Button variant="secondary" className="rounded-circle">
-            <FaAngleUp/>
-        </Button>
-        </div>
+  return (
+    <div>
+      <Button variant="success" onClick={() => setActiveButton('button1')}>이미지형</Button>
+      <Button variant="success" onClick={() => setActiveButton('button2')}>리스트형</Button>
+      <Button variant="success" onClick={() => setActiveButton('button3')}>상세형</Button>
+      
+      <CommunityView activeButton={activeButton} />
+      
+      <div
+        style={{
+          position: "fixed",
+          right: "20px",
+          bottom: "115px",
+          zIndex: 9999,
+        }}
+      >
+        <Button variant="success" className="rounded-circle" onClick={onMoveCommunityResiger}>
+          <FaPlus />
+        </Button>          
       </div>
       
-    );     
-    
+      <div
+        style={{
+          position: "fixed",
+          right: "20px",
+          bottom: "70px",
+          zIndex: 9999,
+        }}
+      >
+      
+      <Button variant="secondary" className="rounded-circle">
+          <FaAngleUp/>
+      </Button>
+      </div>
+    </div>
+  );     
 }
+  
+const CommunityView = ({activeButton}) => {
+
+  const [listData, setListData] = useState(null);
+  useEffect(()=>{
+    axios.get("http://localhost:8080/api/community", {
+      params: {}})
+    .then(function(response) {
+      console.log(response);
+      setListData(response.data.list);
+      console.log(listData);
+    })
+    .catch(function(e) {
+      console.log(e);
+    });
+  }, []);
+
+  switch(activeButton) {
+    case 'button2':
+      return <CommunityListView communityPostList={listData} />
+    case 'button3':
+      return <CommunityCardView communityPostList={listData} />
+    case 'button1':
+    default:
+      return <CommunityImageView communityPostList={listData} />
+  }
+};
+
 const CommunityImageView = () => {
   
   return(
@@ -113,6 +139,7 @@ const CommunityImageView = () => {
   
   const CommunityListView = (props) => {
     const communityPostList = props.communityPostList;
+    console.log(communityPostList);
     return(
       <div>
         <h1></h1>

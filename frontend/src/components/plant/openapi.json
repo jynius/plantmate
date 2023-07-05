@@ -1,0 +1,32 @@
+{
+    "name": "산림청 국립수목원_식물자원 서비스",
+    "description": "식물자원의 항목별 정보 및 상세정보를 조회할수 있는 서비스로서 식물도감,희귀식물,특산식물,식물표본, 식물자원, 기준표본, 식물종자, 보유식물, 보호림, 보호수, 식물세밀화, 관속식물 분포, 민속식물, 외래식물 정보등을 조회할수 있다.  수정 - 2021-03-15; 보호림목록검색(nrfstSearch) 출력항목 수정 [ addtnPlantScnmId : 추가식물학명ID => 추가식물종ID ]                                           보호림상세정보조회(nrfstInfo) 출력항목  수정 [ addtnPlantScnmId : 추가식물학명ID=> 추가식물종ID,   firstPlantScnmId : 학명ID => 종ID ]",
+    "url": "https://www.data.go.kr/data/15000312/openapi.do",
+    "keywords": [
+        "국립수목원,식물자원,식물도감",
+        "식물표본",
+        "희귀식물"
+    ],
+    "license": "http://www.kogl.or.kr/info/license.do",
+    "dateCreated": "2016-06-22",
+    "dateModified": "2023-03-06",
+    "datePublished": "2016-06-22",
+    "creator": {
+        "name": "산림청 국립수목원",
+        "contactPoint": {
+            "contactType": "연구기획팀",
+            "telephone": "+82-0315402029",
+            "@type": "ContactPoint"
+        },
+        "@type": "Organization"
+    },
+    "distribution": [
+        {
+            "encodingFormat": "XML",
+            "contentUrl": "https://www.data.go.kr/data/15000312/openapi.do",
+            "@type": "DataDownload"
+        }
+    ],
+    "@context": "https://schema.org",
+    "@type": "Dataset"
+}
