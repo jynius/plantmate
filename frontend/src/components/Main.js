@@ -9,11 +9,14 @@ import MyPlantDetail from "./myplants/MyPlantDetail";
 import { MyPlantStore } from "../context/MyPlantStore";
 import SignUp from "../SignUp";
 import LoginForm from "../LoginForm";
+import Login from "./auth/Login";
+
 const Main = () => {
   return (
     <>
       <Routes>
         <Route path="/" element={<SampleHome />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/search" element={<SampleHome />} />
         <Route path="/community" element={<Community />} />
         <Route path="/community/post-register" element={<CommunityPostRegister />} />

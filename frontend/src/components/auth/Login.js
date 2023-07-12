@@ -1,16 +1,16 @@
 import {useState} from 'react';
-import axios from "axios";
+import {useNavigate} from "react-router-dom"
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import Api from "../../utils/Api";
 
 function Login() {
 
   const [formData, setFormData] = useState({userid: '', passwd: ''});
-  const [authKey, setAuthKey] = useState(null);
-
+ 
   function handleUseridChange(e) {
     setFormData({...formData, userid: e.target.value})
   }
@@ -19,16 +19,19 @@ function Login() {
     setFormData({...formData, passwd: e.target.value})
   }
   
+  const navigate = useNavigate();
   function handleSubmit(e) {
     e.preventDefault();
-    axios.post("http://localhost:8080/api/auth/login", formData)
-    .then(function(response) {
-      //console.log(response);
-      setAuthKey(response.data.jwt);
-      //console.log(listData);
+    
+    Api.post("auth/login", formData)
+    .then((response) => {
+      console.log(response);
+      Api.setAuthKey(response.data.jwt);
+      navigate("/community");
     })
-    .catch(function(e) {
-      console.log(e);
+    .catch((e) => {
+        console.log(e);
+        alert('뭔가 잘못 됐어!');
     });
   }
   
@@ -57,7 +60,7 @@ function Login() {
 
           <div className="d-grid gap-1">
             <Button variant="secondary" type="submit" >
-              Sign In
+              로그인
             </Button>
           </div>
         </Form>
