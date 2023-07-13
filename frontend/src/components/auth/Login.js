@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import Api from "../../utils/Api";
+import api from "../../utils/Api";
 
 function Login() {
 
@@ -22,11 +22,16 @@ function Login() {
   const navigate = useNavigate();
   function handleSubmit(e) {
     e.preventDefault();
-    
-    Api.post("auth/login", formData)
+    localStorage.removeItem("authorization");
+    api.post("auth/login", formData)
     .then((response) => {
       console.log(response);
-      Api.setAuthKey(response.data.jwt);
+      const {jwt} = response.data;
+      if(jwt) {
+        const authorization = `Bearer ${jwt}`;
+        api.defaults.headers.common['Authorization'] = authorization;
+        localStorage.setItem("authorization", authorization);
+      }
       navigate("/community");
     })
     .catch((e) => {

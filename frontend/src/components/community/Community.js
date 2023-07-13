@@ -4,8 +4,18 @@ import { NavLink, Link, useNavigate} from "react-router-dom"
 import axios from "axios";
 // import plant from "./plant.jpg"
 import {FaPlus ,FaAngleUp} from "react-icons/fa";
+import api from "../../utils/Api";
 
-const plant = "http://localhost:8080/api/file/6";
+const plant = {
+  uri: 'http://localhost:8080/api/file/6',
+  method: 'GET',
+  width: 100,
+  height: 100,
+  headers: {
+    Accept: "*/*",
+    Authorization: localStorage.getItem('authorization')
+  }
+};
 
 const Community = () =>{
   
@@ -74,7 +84,7 @@ const CommunityView = ({activeButton}) => {
 
   const [listData, setListData] = useState(null);
   useEffect(()=>{
-    axios.get("http://localhost:8080/api/community", {
+    api.get("http://localhost:8080/api/community", {
       params: {}})
     .then(function(response) {
       console.log(response);
@@ -108,28 +118,28 @@ const CommunityImageView = () => {
             <Image src={plant} thumbnail />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image src={plant} thumbnail />
+            <Image source={plant} />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image src={plant} thumbnail />
+            <Image source={plant} thumbnail />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image src={plant} thumbnail />
+            <Image source={plant} thumbnail />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image src={plant} thumbnail />
+            <Image source={plant} thumbnail />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image src={plant} thumbnail />
+            <Image source={plant} thumbnail />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image src={plant} thumbnail />
+            <Image source={plant} thumbnail />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image src={plant} thumbnail />
+            <Image source={plant} thumbnail />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image src={plant} thumbnail />
+            <Image source={plant} thumbnail />
           </Col>
         </Row>
 
@@ -194,7 +204,7 @@ const CommunityImageView = () => {
                   </div>
                   <Card.Img
                   variant="middle"
-                  src={plant}
+                  source={plant}
                   style={{ width: "30%", height: "30%", objectFit: "cover" }}
                 />                           
                   <Card.Text style={{textAlign:'left'}}>
