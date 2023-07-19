@@ -12,7 +12,7 @@ const api = axios.create({
 // 요청 인터셉터 추가하기
 api.interceptors.request.use(
   function (config) {
-    console.log('config: ', config);
+    //console.log('config: ', config);
     const authorization = localStorage.getItem("authorization");
     if(authorization) {
       config.headers['Authorization'] = authorization;
@@ -35,7 +35,7 @@ api.interceptors.response.use(
     console.log('authorization: ', response.headers.authorization);
     const {authorization} = response.headers;
     if(authorization) {
-      api.defaults.headers.common['Authorization'] = authorization;
+      //api.defaults.headers.common['Authorization'] = authorization;
       localStorage.setItem("authorization", authorization);
     }
     return response;

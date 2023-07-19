@@ -1,11 +1,28 @@
 import React from "react";
 import { Navbar, Nav, Button, NavDropdown, Container } from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
+import api from "../../utils/Api";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/header.css";
 
 const Header = () => {
   // Replace "userNickname" with the actual user's nickname
   const userNickname = "John Doe";
+  const navigate = useNavigate();
+  function handleLogoutButtonClick(e) {
+//    e.preventDefault();
+//    api.post("auth/logout")
+//    .then((response) => {
+//      console.log(response);
+      api.defaults.headers.common['Authorization'] = null;
+      localStorage.removeItem("authorization");
+      navigate("/login");
+    // })
+    // .catch((e) => {
+    //     console.log(e);
+    //     alert('뭔가 잘못 됐어!');
+    // });
+  }
 
   return (
     <Navbar
@@ -48,7 +65,7 @@ const Header = () => {
             <Button variant='light' className='transparent-button'>
               회원정보
             </Button>
-            <Button variant='light' className='transparent-button'>
+            <Button variant='light' className='transparent-button' onClick={handleLogoutButtonClick}>
               로그아웃
             </Button>
           </Nav>

@@ -1,21 +1,20 @@
 import React, {useState, useEffect} from "react";
-import {Button, ListGroup, Badge, Card, CardGroup,Container,Row,Col,Image,ToggleButton} from 'react-bootstrap';
+// https://stackoverflow.com/questions/49667452/module-not-found-cant-resolve-react-native-react-native
+// Module not found: Can't resolve 'react-native' - React Native
+// npm install react-native-web
+//    react-native-web is not a dependency of react-native, but if you make a web build of a react-native project,
+//  webpack/babel/etc use an alias under the hood to hijack every import of react-native and point them
+//  at react-native-web instead. So if react-native-web isn't installed, the react-native import will fail
+//  because it has been aliased to point somewhere that doesn't exist.
+// import {Image} from 'react-native';
+import {Button, ListGroup, Badge, Card, CardGroup,Container,Row,Col, Image, ToggleButton} from 'react-bootstrap';
 import { NavLink, Link, useNavigate} from "react-router-dom"
 import axios from "axios";
 // import plant from "./plant.jpg"
 import {FaPlus ,FaAngleUp} from "react-icons/fa";
 import api from "../../utils/Api";
 
-const plant = {
-  uri: 'http://localhost:8080/api/file/6',
-  method: 'GET',
-  width: 100,
-  height: 100,
-  headers: {
-    Accept: "*/*",
-    Authorization: localStorage.getItem('authorization')
-  }
-};
+const plant = 'http://localhost:8080/api/file/6';
 
 const Community = () =>{
   
@@ -118,28 +117,28 @@ const CommunityImageView = () => {
             <Image src={plant} thumbnail />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image source={plant} />
+            <Image src={plant} thumbnail />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image source={plant} thumbnail />
+            <Image src={plant} thumbnail />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image source={plant} thumbnail />
+            <Image src={plant} thumbnail />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image source={plant} thumbnail />
+            <Image src={plant} thumbnail />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image source={plant} thumbnail />
+            <Image src={plant} thumbnail />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image source={plant} thumbnail />
+            <Image src={plant} thumbnail />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image source={plant} thumbnail />
+            <Image src={plant} thumbnail />
           </Col>
           <Col sm={12} md={4} className="p-0">
-            <Image source={plant} thumbnail />
+            <Image src={plant} thumbnail />
           </Col>
         </Row>
 
@@ -204,7 +203,7 @@ const CommunityImageView = () => {
                   </div>
                   <Card.Img
                   variant="middle"
-                  source={plant}
+                  src={plant}
                   style={{ width: "30%", height: "30%", objectFit: "cover" }}
                 />                           
                   <Card.Text style={{textAlign:'left'}}>

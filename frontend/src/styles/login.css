@@ -1,0 +1,168 @@
+body {
+    height: 100%;
+    overflow-y:hidden;
+}
+.panel {
+    padding: 20% 760px 239px;
+    background-color: #fff;
+}
+
+form {
+    padding: 77px 50px 93px;
+    border-radius: 25px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.25);
+    border: solid 1px #2d6214;
+    background-color: #fff;
+}
+
+.green-tea-1 {
+    width: 31px;
+    height: 34.5px;
+    flex-grow: 0;
+    margin: 0 53px;
+}
+
+.PLANT-MATE {
+    width: 137px;
+    height: 102.5px;
+    flex-grow: 0;
+    margin: 34.5px 0 0;
+    font-family: NotoSansKR;
+    font-size: 32px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 4.8px;
+    text-align: center;
+    color: #000;
+}
+
+.ID {
+    width: 16px;
+    height: 20px;
+    margin: 66px 58px 7px 7px;
+    font-family: NotoSansKR;
+    font-size: 14px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 0.7px;
+    text-align: center;
+    color: #000;
+}
+
+.PASSWORD {
+    width: 83px;
+    height: 20px;
+    margin: 8px 209px 8px 8px;
+    font-family: NotoSansKR;
+    font-size: 14px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 0.7px;
+    text-align: center;
+    color: #000;
+}
+
+.ID-area {
+    width: 300px;
+    height: 37px;
+    margin: 7px 0 8px;
+    border-radius: 25px;
+    background-color: #bbd2b3;
+}
+
+.PW-area {
+    width: 300px;
+    height: 37px;
+    margin: 8px 0 7px;
+    border-radius: 25px;
+    background-color: #bbd2b3;
+}
+
+.recall-ID {
+    width: 51px;
+    height: 14px;
+    flex-grow: 0;
+    margin: 0 52px 0 0;
+    font-family: NotoSansKR;
+    font-size: 10px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 0.5px;
+    text-align: center;
+    color: #000;
+}
+
+.revoke-PW {
+    width: 61px;
+    height: 14px;
+    flex-grow: 0;
+    margin: 0 57px 0 52px;
+    font-family: NotoSansKR;
+    font-size: 10px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 0.5px;
+    text-align: center;
+    color: #000;
+}
+
+.join {
+    width: 42px;
+    height: 14px;
+    flex-grow: 0;
+    margin: 0 0 0 57px;
+    font-family: NotoSansKR;
+    font-size: 10px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 0.5px;
+    text-align: center;
+    color: #000;
+}
+
+div.Google- {
+    width: 300px;
+    height: 37px;
+    flex-grow: 0;
+    margin: 32px 0 0;
+    padding: 10px 103px 10px 22px;
+    border-radius: 25px;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.3);
+    border: solid 0.3px #000;
+    background-color: #fff;
+}
+
+.Google__G__Logo-1 {
+    width: 15px;
+    height: 15px;
+    flex-grow: 0;
+    margin: 1px 66px 1px 0;
+}
+
+span.Google- {
+    width: 94px;
+    height: 17px;
+    flex-grow: 0;
+    margin: 0 0 0 66px;
+    font-family: NotoSansKR;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 0.6px;
+    text-align: center;
+    color: #808080;
+}
