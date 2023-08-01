@@ -16,7 +16,7 @@ const Header = () => {
 //      console.log(response);
       api.defaults.headers.common['Authorization'] = null;
       localStorage.removeItem("authorization");
-      navigate("/login");
+      window.location.pathname = "/login";
     // })
     // .catch((e) => {
     //     console.log(e);
